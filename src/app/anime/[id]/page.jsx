@@ -13,7 +13,7 @@ export default async function Page({params: {id}}) {
     <div>
         <div className='pt-4 px-4'>
 
-            <h3 className='text-2xl text-color-primary'>{anime.data.title}</h3>
+            <h3 className='text-2xl text-color-primary'>{anime.data.title} - {anime.data.year}</h3>
 
         </div>
         <div className='gap-4 pt-4 px-4 justify-center flex flex-row flex-wrap text-color-primary border-1'>
