@@ -1,12 +1,18 @@
 'use client'
 import Image from "next/image"
 import Link from "next/link"
-import { Star } from "@phosphor-icons/react"
+import StarButton from "./StarButton"
+import { authUserSession } from "@/libs/auth-libs"
 
-export function AnimeList({ api }){
-    return(
+
+
+export async function AnimeList({ api }){
+    // const user = await authUserSession()
+    // console.log(user)
+    
+    return( 
         <div className="px-4 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 
-                        ">
+         ">
             
 
         {api.data?.map((anime) =>{
@@ -28,7 +34,8 @@ export function AnimeList({ api }){
                 
                 </div>
                 <div className="mt-2 overflow-auto">
-                    <Star size={24} weight="light" className="absolute pb-0.5"/>
+                <StarButton api={anime} />
+                    {/* <Star size={24} weight="light" className="absolute pb-0.5"  /> */}
                     <h3 className="pl-7">  {anime.score} • {anime.type} </h3>
                 {/* <p className="pr-2 font-extralight ">{anime.rating}</p> */}
                 </div>

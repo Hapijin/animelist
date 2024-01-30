@@ -13,7 +13,7 @@ export default async function Page() {
   // console.log(recommendedAnime)
   
   return (
-    <>
+    <div className="">
       <section className="">
 
       <Header title="Top Anime" linkHref="/popular" linkTitle="Show All" />
@@ -24,6 +24,6 @@ export default async function Page() {
       <Header title="Recommended Anime" linkHref="/popular"  />
       <RecommendList api={recommendedAnime}/>
       </section>
-    </>
+    </div>
   )
 }

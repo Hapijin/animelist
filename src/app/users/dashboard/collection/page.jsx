@@ -1,39 +1,27 @@
 import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
 import Header from '@/components/Dashboard/Header'
+import { authUserSession } from '@/libs/auth-libs'
+import Content from './content'
+import prisma from '@/libs/prisma'
 
-export default function Page() {
+export default async function Page() {
+  const user = await authUserSession()
+  const collection = await prisma.collection.findMany({
+    where: {user_email: user.email}
+  })
+    // console.log(user)
   return (
+    <>
     <section className='p-4 '>
         <Header title="My Anime Collection"/>
-        <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-4'>
-
-        <Link href="/" className='border-2 border-color-accent relative'>
-          <Image src="" alt="" width={350} height={350} className=''/>
-          <div className='absolute flex bottom-0 w-full bg-color-accent h-16'>
-            <h5 className='text-color-primary justify-center items-center'>Judul Anime</h5>
-          </div>
-        </Link>
-        <Link href="/" className='border-2 border-color-accent relative'>
-          <Image src="" alt="" width={350} height={350} className=''/>
-          <div className='absolute flex bottom-0 w-full bg-color-accent h-16'>
-            <h5 className='text-color-primary justify-center items-center'>Judul Anime</h5>
-          </div>
-        </Link>
-        <Link href="/" className='border-2 border-color-accent relative'>
-          <Image src="" alt="" width={350} height={350} className=''/>
-          <div className='absolute flex bottom-0 w-full bg-color-accent h-16'>
-            <h5 className='text-color-primary justify-center items-center'>Judul Anime</h5>
-          </div>
-        </Link>
-        <Link href="/" className='border-2 border-color-accent relative'>
-          <Image src="" alt="" width={350} height={350} className=''/>
-          <div className='absolute flex bottom-0 w-full bg-color-accent h-16'>
-            <h5 className='text-color-primary justify-center items-center'>Judul Anime</h5>
-          </div>
-        </Link>
+        <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-4 '>
+        {collection?.map((collect, index) => {
+          return (
+            <Content key={index} api={collect}/>
+            )
+          })}
         </div>
     </section>
+    </>
   )
 }
