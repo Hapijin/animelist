@@ -1,21 +1,23 @@
+"use client";
 import { getAnimeResponse, getGenres } from "@/libs/api-libs";
 import React from "react";
 import Image from "next/image";
 import VideoPlayer from "@/components/Utilities/VideoPlayer";
 import CollectionButton from "@/components/AnimeList/CollectionButton";
-import { authUserSession } from "@/libs/auth-libs";
-import prisma from "@/libs/prisma";
+// import { authUserSession } from "@/libs/auth-libs";
+// import prisma from "@/libs/prisma";
 import CommentInput from "@/components/AnimeList/CommentInput";
+import { collection, user } from "@/app/api/v1/collection/route";
 
 export default async function Page({ params: { id } }) {
   const anime = await getAnimeResponse(`anime/${id}`);
-  const user = await authUserSession();
+  // const user = await authUserSession();
   let genre = await getGenres(`anime/${id}`, "name");
   // console.log(genre);
   // genre = genre.join(", ");
-  const collection = await prisma.collection.findFirst({
-    where: { user_email: user?.email, anime_mal_id: id },
-  });
+  // const collection = await prisma.collection.findFirst({
+  //   where: { user_email: user?.email, anime_mal_id: id },
+  // });
 
   return (
     <div className="mx-4 lg:mx-32">
@@ -53,8 +55,10 @@ export default async function Page({ params: { id } }) {
           </h3>
           {/* <p>Genre: {genre}</p> */}
           <div className="flex flex-wrap gap-2">
-            {genre.map((genre) => (
-              <button className="bg-color-secondary p-1">{genre}</button>
+            {genre.map((genre, index) => (
+              <button className="bg-color-secondary p-1" key={index}>
+                {genre}
+              </button>
             ))}
           </div>
           <p>

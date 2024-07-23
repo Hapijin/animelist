@@ -1,3 +1,4 @@
+import { authUserSession } from "@/libs/auth-libs"
 import prisma from "@/libs/prisma"
 
 export  async function POST(request) {
@@ -9,4 +10,16 @@ export  async function POST(request) {
     if(!createCollection) return Response.json ({ status: 500, isCreated: false})
     else return Response.json({ status: 200, isCreated: true })
   
+}
+
+export async function user() {
+
+    const user = await authUserSession();
+    return user
+}
+export async function collection() {
+    const collection = await prisma.collection.findFirst({
+        where: { user_email: user?.email, anime_mal_id: id },
+      });
+      return collection
 }
